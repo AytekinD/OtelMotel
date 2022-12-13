@@ -8,6 +8,8 @@ namespace OtelMotel.DAL.EntityTypeConfiguration
         public override void Configure(EntityTypeBuilder<Oda> builder)
         {
             base.Configure(builder);
+            builder.HasOne(p => p.Kullanici).WithMany(p => p.Odalar).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+
             builder.Property(p => p.OdaNo).HasMaxLength(50);
         }
     }

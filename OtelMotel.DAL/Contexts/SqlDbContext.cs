@@ -10,6 +10,7 @@ namespace OtelMotel.DAL.Contexts
         public DbSet<Oda> Odalar { get; set; }
         public DbSet<OdaFiyat> OdaFiyatlari { get; set; }
         public DbSet<Rezervasyon> Rezervasyonlar { get; set; }
+        public DbSet<RezervasyonDetay> RezervasyonDetaylari { get; set; }
         public DbSet<Musteri> Musteriler { get; set; }
 
 

@@ -10,7 +10,8 @@ namespace OtelMotel.DAL.EntityTypeConfiguration
         {
             builder.Property(p => p.Id).HasDefaultValue(new Guid());
             builder.Property(p => p.CreateDate).HasDefaultValue(new DateTime());
-            builder.Property(p => p.Status).HasDefaultValue(1);
+
         }
     }
 }
+

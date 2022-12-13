@@ -10,5 +10,7 @@ namespace OtelMotel.Entities.Entities.Concrete
         public string MusteriTcNo { get; set; }
         public string CepNo { get; set; }
         public ICollection<Rezervasyon> Rezervasyonlari { get; set; }
+        public Guid KullaniciId { get; set; }
+        public Kullanici Kullanici { get; set; }
     }
 }

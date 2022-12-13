@@ -9,5 +9,7 @@ namespace OtelMotel.Entities.Entities.Concrete
         public bool Durum { get; set; } = true;
         public ICollection<OdaFiyat> OdaFiyatlari { get; set; }
         public ICollection<Rezervasyon> Rezervasyonlari { get; set; }
+        public Guid KullaniciId { get; set; }
+        public Kullanici Kullanici { get; set; }
     }
 }

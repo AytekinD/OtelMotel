@@ -13,6 +13,6 @@
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime? Update { get; set; }
         public string CreateUser { get; set; }
-        public Status Status { get; set; }
+        public Status Status { get; set; } = Status.Active;
     }
 }
