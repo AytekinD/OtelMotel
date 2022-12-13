@@ -12,8 +12,8 @@ using OtelMotel.DAL.Contexts;
 namespace OtelMotel.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20221213154325_initdb")]
-    partial class initdb
+    [Migration("20221213163601_mig.init")]
+    partial class miginit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,8 +29,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
@@ -70,8 +69,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Ad")
                         .IsRequired()
@@ -95,6 +93,9 @@ namespace OtelMotel.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("KullaniciId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("MusteriTcNo")
                         .IsRequired()
                         .HasMaxLength(11)
@@ -113,6 +114,8 @@ namespace OtelMotel.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("KullaniciId");
+
                     b.ToTable("Musteriler");
                 });
 
@@ -120,8 +123,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
@@ -138,6 +140,9 @@ namespace OtelMotel.DAL.Migrations
                     b.Property<byte>("KisiSayisi")
                         .HasColumnType("tinyint");
 
+                    b.Property<Guid>("KullaniciId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("OdaNo")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -151,6 +156,8 @@ namespace OtelMotel.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("KullaniciId");
+
                     b.ToTable("Odalar");
                 });
 
@@ -158,8 +165,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("Baslangic")
                         .HasColumnType("datetime2");
@@ -179,6 +185,9 @@ namespace OtelMotel.DAL.Migrations
                     b.Property<float>("Fiyat")
                         .HasColumnType("real");
 
+                    b.Property<Guid>("KullaniciId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("OdaId")
                         .HasColumnType("uniqueidentifier");
 
@@ -190,6 +199,8 @@ namespace OtelMotel.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("KullaniciId");
+
                     b.HasIndex("OdaId");
 
                     b.ToTable("OdaFiyatlari");
@@ -199,8 +210,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CikisTarihi")
                         .HasColumnType("datetime2");
@@ -216,6 +226,9 @@ namespace OtelMotel.DAL.Migrations
 
                     b.Property<DateTime>("GirisTarihi")
                         .HasColumnType("datetime2");
+
+                    b.Property<Guid>("KullaniciId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("MusteriId")
                         .HasColumnType("uniqueidentifier");
@@ -234,6 +247,8 @@ namespace OtelMotel.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("KullaniciId");
+
                     b.HasIndex("MusteriId");
 
                     b.HasIndex("OdaFiyatId");
@@ -247,8 +262,7 @@ namespace OtelMotel.DAL.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasDefaultValue(new Guid("00000000-0000-0000-0000-000000000000"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
@@ -258,6 +272,9 @@ namespace OtelMotel.DAL.Migrations
                     b.Property<string>("CreateUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("KullaniciId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MusteriId")
                         .HasColumnType("uniqueidentifier");
@@ -273,6 +290,8 @@ namespace OtelMotel.DAL.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("KullaniciId");
+
                     b.HasIndex("MusteriId");
 
                     b.HasIndex("RezervasyonId");
@@ -280,19 +299,55 @@ namespace OtelMotel.DAL.Migrations
                     b.ToTable("RezervasyonDetaylari");
                 });
 
+            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>
+                {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
+                        .WithMany("Musteriler")
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Kullanici");
+                });
+
+            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Oda", b =>
+                {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
+                        .WithMany("Odalar")
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Kullanici");
+                });
+
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.OdaFiyat", b =>
                 {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
+                        .WithMany("OdaFiyatlari")
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.Oda", "Oda")
                         .WithMany("OdaFiyatlari")
                         .HasForeignKey("OdaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Kullanici");
+
                     b.Navigation("Oda");
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Rezervasyon", b =>
                 {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
+                        .WithMany("Rezervasyonlar")
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.Musteri", null)
                         .WithMany("Rezervasyonlari")
                         .HasForeignKey("MusteriId");
@@ -300,14 +355,16 @@ namespace OtelMotel.DAL.Migrations
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.OdaFiyat", "OdaFiyat")
                         .WithMany("Rezervasyonlari")
                         .HasForeignKey("OdaFiyatId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.Oda", "Oda")
                         .WithMany("Rezervasyonlari")
                         .HasForeignKey("OdaId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Kullanici");
 
                     b.Navigation("Oda");
 
@@ -316,6 +373,12 @@ namespace OtelMotel.DAL.Migrations
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.RezervasyonDetay", b =>
                 {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
+                        .WithMany("RezervasyonDetaylari")
+                        .HasForeignKey("KullaniciId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.Musteri", "Musteri")
                         .WithMany()
                         .HasForeignKey("MusteriId")
@@ -325,12 +388,27 @@ namespace OtelMotel.DAL.Migrations
                     b.HasOne("OtelMotel.Entities.Entities.Concrete.Rezervasyon", "Rezervasyon")
                         .WithMany("RezervasyonDetaylari")
                         .HasForeignKey("RezervasyonId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Kullanici");
 
                     b.Navigation("Musteri");
 
                     b.Navigation("Rezervasyon");
+                });
+
+            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Kullanici", b =>
+                {
+                    b.Navigation("Musteriler");
+
+                    b.Navigation("OdaFiyatlari");
+
+                    b.Navigation("Odalar");
+
+                    b.Navigation("RezervasyonDetaylari");
+
+                    b.Navigation("Rezervasyonlar");
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>

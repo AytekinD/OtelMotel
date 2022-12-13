@@ -10,8 +10,8 @@ namespace OtelMotel.DAL.EntityTypeConfiguration
             base.Configure(builder);
             builder.HasOne(p => p.Rezervasyon)
                 .WithMany(p => p.RezervasyonDetaylari)
-                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
-            builder.HasOne(p => p.Kullanici).WithMany(p => p.RezervasyonDetaylari).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+                .OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
+            builder.HasOne(p => p.Kullanici).WithMany(p => p.RezervasyonDetaylari).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
 
         }
     }

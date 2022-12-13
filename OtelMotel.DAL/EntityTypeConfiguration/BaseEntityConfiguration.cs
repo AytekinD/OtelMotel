@@ -8,7 +8,7 @@ namespace OtelMotel.DAL.EntityTypeConfiguration
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.Property(p => p.Id).HasDefaultValue(new Guid());
+            builder.Property(p => p.Id);
             builder.Property(p => p.CreateDate).HasDefaultValue(new DateTime());
 
         }

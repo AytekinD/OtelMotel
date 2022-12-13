@@ -12,7 +12,7 @@ namespace OtelMotel.DAL.EntityTypeConfiguration
             builder.Property(p => p.Ad).HasMaxLength(30);
             builder.Property(p => p.Soyad).HasMaxLength(30);
             builder.Property(p => p.CepNo).HasMaxLength(20);
-            builder.HasOne(p => p.Kullanici).WithMany(p => p.Musteriler).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.NoAction);
+            builder.HasOne(p => p.Kullanici).WithMany(p => p.Musteriler).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
 
         }
     }
