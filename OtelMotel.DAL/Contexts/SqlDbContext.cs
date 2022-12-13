@@ -16,5 +16,6 @@ namespace OtelMotel.DAL.Contexts
         {
             optionsBuilder.UseSqlServer(@"server=(localdb)\mssqllocaldb;Database=OtelMotelDb;Trusted_Connection=true");
         }
+
     }
 }

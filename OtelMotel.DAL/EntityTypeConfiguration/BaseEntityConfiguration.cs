@@ -4,9 +4,9 @@ using OtelMotel.Entities.Entities.Abstract;
 
 namespace OtelMotel.DAL.EntityTypeConfiguration
 {
-    public abstract class BaseEntityConfiguration : IEntityTypeConfiguration<BaseEntity>
+    public abstract class BaseEntityConfiguration<T> : IEntityTypeConfiguration<T> where T : BaseEntity
     {
-        public virtual void Configure(EntityTypeBuilder<BaseEntity> builder)
+        public virtual void Configure(EntityTypeBuilder<T> builder)
         {
             builder.Property(p => p.Id).HasDefaultValue(new Guid());
             builder.Property(p => p.CreateDate).HasDefaultValue(new DateTime());
