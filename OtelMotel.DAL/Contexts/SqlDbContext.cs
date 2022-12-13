@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OtelMotel.Entities.Entities.Concrete;
+using System.Reflection;
 
 namespace OtelMotel.DAL.Contexts
 {
@@ -16,6 +17,10 @@ namespace OtelMotel.DAL.Contexts
         {
             optionsBuilder.UseSqlServer(@"server=(localdb)\mssqllocaldb;Database=OtelMotelDb;Trusted_Connection=true");
         }
-
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+        }
     }
 }

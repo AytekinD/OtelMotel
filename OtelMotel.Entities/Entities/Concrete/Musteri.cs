@@ -9,5 +9,6 @@ namespace OtelMotel.Entities.Entities.Concrete
         public bool Cinsiyet { get; set; }
         public string MusteriTcNo { get; set; }
         public string CepNo { get; set; }
+        public ICollection<Rezervasyon> Rezervasyonlari { get; set; }
     }
 }
