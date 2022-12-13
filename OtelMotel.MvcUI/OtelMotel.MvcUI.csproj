@@ -6,4 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OtelMotel.BL\OtelMotel.BL.csproj" />
+    <ProjectReference Include="..\OtelMotel.DAL\OtelMotel.DAL.csproj" />
+    <ProjectReference Include="..\OtelMotel.Entities\OtelMotel.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

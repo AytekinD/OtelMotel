@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OtelMotel.DAL\OtelMotel.DAL.csproj" />
+    <ProjectReference Include="..\OtelMotel.Entities\OtelMotel.Entities.csproj" />
+  </ItemGroup>
+
 </Project>
