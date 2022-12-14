@@ -1,0 +1,21 @@
+﻿@model List<Kullanici>
+
+    <table class="table table-hover table-primary">
+    <thead>
+        <tr>Email</tr>
+        <tr>TcNo</tr>
+        <tr>CreateDate</tr>
+        <tr>KullaniciId</tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+            <td>@item.Email</td>
+            <td>@item.TcNo</td>
+            <td>@item.CreateDate</td>
+            <td>@item.KullaniciId</td>
+            </tr>
+        }
+    </tbody>
+    </table>

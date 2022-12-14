@@ -12,7 +12,7 @@
         public Guid Id { get; set; }
         public DateTime CreateDate { get; set; } = DateTime.Now;
         public DateTime? Update { get; set; }
-        public string CreateUser { get; set; }
+        public string? KullaniciId { get; set; }
         public Status Status { get; set; } = Status.Active;
     }
 }

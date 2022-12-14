@@ -12,5 +12,6 @@ namespace OtelMotel.Entities.Entities.Concrete
         public ICollection<OdaFiyat> OdaFiyatlari { get; set; }
         public ICollection<Rezervasyon> Rezervasyonlar { get; set; }
         public ICollection<RezervasyonDetay> RezervasyonDetaylari { get; set; }
+        public ICollection<Role> Roller { get; set; }
     }
 }

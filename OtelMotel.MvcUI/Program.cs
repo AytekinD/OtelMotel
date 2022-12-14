@@ -1,3 +1,5 @@
+using OtelMotel.MvcUI.Extensions;
+
 namespace OtelMotel.MvcUI
 {
     public class Program
@@ -8,6 +10,8 @@ namespace OtelMotel.MvcUI
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddOtelMotelManager();
+
 
             var app = builder.Build();
 
