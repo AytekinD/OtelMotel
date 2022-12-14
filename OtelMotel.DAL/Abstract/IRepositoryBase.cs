@@ -1,10 +1,12 @@
-﻿using OtelMotel.Entities.Entities.Abstract;
+﻿using OtelMotel.DAL.Contexts;
+using OtelMotel.Entities.Entities.Abstract;
 using System.Linq.Expressions;
 
 namespace OtelMotel.DAL.Abstract
 {
     public interface IRepositoryBase<T> where T : BaseEntity, new()
     {
+        SqlDbContext dbContext { get; set; }
         Task<int> CreateAsync(T entity);
         Task<int> UpdateAsync(T entity);
         Task<int> DeleteAsync(T entity);

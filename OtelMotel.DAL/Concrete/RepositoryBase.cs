@@ -1,4 +1,5 @@
-﻿using OtelMotel.DAL.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using OtelMotel.DAL.Abstract;
 using OtelMotel.DAL.Contexts;
 using OtelMotel.Entities.Entities.Abstract;
 using System.Linq.Expressions;
@@ -7,49 +8,71 @@ namespace OtelMotel.DAL.Concrete
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : BaseEntity, new()
     {
-        public SqlDbContext dbContext;
+        public SqlDbContext dbContext { get; set; }
         public RepositoryBase()
         {
             dbContext = new SqlDbContext();
         }
-        public virtual Task<int> CreateAsync(T entity)
+        public virtual async Task<int> CreateAsync(T entity)
         {
-            throw new NotImplementedException();
+            //işi yapmasini asenkron olarak bildiriyoruz
+            await dbContext.Set<T>().AddAsync(entity);
+            return await dbContext.SaveChangesAsync();
         }
 
-        public virtual Task<int> DeleteAsync(T entity)
+        public virtual async Task<int> UpdateAsync(T entity)
         {
-            throw new NotImplementedException();
+            dbContext.Set<T>().Update(entity);
+            return await dbContext.SaveChangesAsync();
         }
 
-        public virtual Task<IList<T>> FindAllAsync(Expression<Func<T, bool>> filter = null)
+        public virtual async Task<int> DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            dbContext.Set<T>().Remove(entity);
+            return await dbContext.SaveChangesAsync();
         }
 
-        public virtual Task<IQueryable<T>> FindAllIncludeAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] include)
+        public virtual async Task<T?> GetByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            return await dbContext.Set<T>().FindAsync(id);
+
         }
 
-        public virtual Task<T> FindAsync(Expression<Func<T, bool>> filter = null)
+        public virtual async Task<T?> FindAsync(Expression<Func<T, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            if (filter != null)
+            {
+                return await dbContext.Set<T>().Where(filter).FirstOrDefaultAsync();
+            }
+            else
+                return await dbContext.Set<T>().FirstOrDefaultAsync();
         }
 
-        public virtual Task<T> GetByIdAsync(string id)
+        public virtual async Task<ICollection<T>> RawSqlQuery(T entity, string sql)
         {
-            throw new NotImplementedException();
+            var result = dbContext.Set<T>().FromSqlRaw(sql);
+            return await result.ToListAsync();
         }
 
-        public virtual Task<ICollection<T>> RawSqlQuery(T entity, string sql)
+        public virtual async Task<IList<T>?> FindAllAsync(Expression<Func<T, bool>> filter = null)
         {
-            throw new NotImplementedException();
+            if (filter != null)
+                return await dbContext.Set<T>().Where(filter).ToListAsync();
+
+            else
+                return await dbContext.Set<T>().ToListAsync();
         }
 
-        public virtual Task<int> UpdateAsync(T entity)
+        public virtual async Task<IQueryable<T>> FindAllIncludeAsync(Expression<Func<T, bool>> filter = null, params Expression<Func<T, object>>[] include)
         {
-            throw new NotImplementedException();
+            var query = dbContext.Set<T>();
+            if (filter != null)
+            {
+                query.Where(filter);
+            }
+            var result = include.Aggregate(query.AsQueryable(), (current, includeprop) => current.Include(includeprop));
+            return result;
         }
+
     }
 }
