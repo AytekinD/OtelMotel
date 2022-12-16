@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OtelMotel.BL.Abstract;
 
-namespace OtelMotel.MvcUI.Controllers
+namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+
     public class RoleController : Controller
     {
         private readonly IRoleManager roleMAnager;

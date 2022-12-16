@@ -12,8 +12,8 @@ using OtelMotel.DAL.Contexts;
 namespace OtelMotel.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20221214152241_mig.initKullanici")]
-    partial class miginitKullanici
+    [Migration("20221216161910_mig.image")]
+    partial class migimage
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,29 +25,68 @@ namespace OtelMotel.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("KullaniciRole", b =>
+                {
+                    b.Property<Guid>("KullanicilarId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RollerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KullanicilarId", "RollerId");
+
+                    b.HasIndex("RollerId");
+
+                    b.ToTable("KullaniciRole");
+                });
+
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Kullanici", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Adi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("Cinsiyet")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<DateTime>("DogumTarihi")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("KullaniciId")
+                    b.Property<byte[]>("ImageData")
                         .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("KullaniciId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Soyadi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -61,6 +100,15 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("KullaniciAdi")
+                        .IsUnique();
+
+                    b.HasIndex("TcNo")
+                        .IsUnique();
 
                     b.ToTable("Kullanicilar");
                 });
@@ -277,6 +325,54 @@ namespace OtelMotel.DAL.Migrations
                     b.HasIndex("RezervasyonId");
 
                     b.ToTable("RezervasyonDetaylari");
+                });
+
+            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreateDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+                    b.Property<string>("KullaniciId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleName")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("Update")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleName")
+                        .IsUnique();
+
+                    b.ToTable("Roller");
+                });
+
+            modelBuilder.Entity("KullaniciRole", b =>
+                {
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", null)
+                        .WithMany()
+                        .HasForeignKey("KullanicilarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RollerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using OtelMotel.MvcUI.Extensions;
 
 namespace OtelMotel.MvcUI
@@ -11,7 +12,16 @@ namespace OtelMotel.MvcUI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddOtelMotelManager();
-
+            #region Cookie Base Authentication Ayarlari
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(p =>
+                    {
+                        p.LoginPath = "/Login/Giris";
+                        p.LogoutPath = "/Login/LogOut";
+                        p.Cookie.Name = "OtelMotel";
+                        p.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    });
+            #endregion
 
             var app = builder.Build();
 
@@ -23,7 +33,7 @@ namespace OtelMotel.MvcUI
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

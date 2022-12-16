@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace OtelMotel.MvcUI.Controllers
+namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 {
-    public class OdaFiyatController : Controller
+    [Area("Admin")]
+
+    public class OdaController : Controller
     {
         public IActionResult Index()
         {

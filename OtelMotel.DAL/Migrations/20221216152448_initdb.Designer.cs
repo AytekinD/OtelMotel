@@ -12,8 +12,8 @@ using OtelMotel.DAL.Contexts;
 namespace OtelMotel.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20221214165546_mig.Roller")]
-    partial class migRoller
+    [Migration("20221216152448_initdb")]
+    partial class initdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,15 +46,31 @@ namespace OtelMotel.DAL.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Adi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<bool>("Cinsiyet")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("CreateDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
+                    b.Property<DateTime>("DogumTarihi")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("KullaniciAdi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("KullaniciId")
                         .HasColumnType("nvarchar(max)");
@@ -62,6 +78,11 @@ namespace OtelMotel.DAL.Migrations
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Soyadi")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -75,6 +96,15 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("KullaniciAdi")
+                        .IsUnique();
+
+                    b.HasIndex("TcNo")
+                        .IsUnique();
 
                     b.ToTable("Kullanicilar");
                 });

@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OtelMotel.BL.Abstract;
 
-namespace OtelMotel.MvcUI.Controllers
+namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 {
+    [Area("Admin")]
+    [Authorize(Roles = "Admin")]
+
     public class KullaniciController : Controller
     {
         private readonly IKullaniciManager kullaniciManager;
@@ -13,7 +17,7 @@ namespace OtelMotel.MvcUI.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var result = await kullaniciManager.FindAllAsync();
+            var result = await kullaniciManager.FindAllIncludeAsync(null, p => p.Roller);
             return View(result);
         }
         public async Task<IActionResult> Kayit()

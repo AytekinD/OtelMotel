@@ -5,7 +5,8 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize(Roles = "Admin")]
-    public class HomeController : Controller
+
+    public class MusteriController : Controller
     {
         public IActionResult Index()
         {
