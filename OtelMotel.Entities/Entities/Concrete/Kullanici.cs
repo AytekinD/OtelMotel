@@ -13,6 +13,7 @@ namespace OtelMotel.Entities.Entities.Concrete
         public bool Cinsiyet { get; set; }
         public DateTime DogumTarihi { get; set; }
         public byte[] ImageData { get; set; }
+        public string? ImageUrl { get; set; }
         public ICollection<Musteri> Musteriler { get; set; }
         public ICollection<Oda> Odalar { get; set; }
         public ICollection<OdaFiyat> OdaFiyatlari { get; set; }

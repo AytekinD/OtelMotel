@@ -46,7 +46,7 @@
 					<li class="header-nav-list"><a class="header-nav-link" href="contact-page.html">Contact Us</a></li>
 					@if (User.Identity.IsAuthenticated)
 						{
-						<li class="header-nav-list"><a class="header-btn header-btn-custom" asp-controller="Logout" asp-action="Logout">Logout</a></li>
+						<li class="header-nav-list"><a class="header-btn header-btn-custom" asp-controller="Login" asp-action="LogOut">LogOut</a></li>
 					}
 					else{
 					<li class="header-nav-list"><a class="header-btn header-btn-custom" asp-controller="Login" asp-action="Giris">Login</a></li>

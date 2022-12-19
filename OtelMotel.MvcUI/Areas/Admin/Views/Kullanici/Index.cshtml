@@ -20,13 +20,13 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>@item.KullaniciId</td>
+                        <td>@item.Id</td>
                         <td>@item.Adi</td>
                         <td>@item.Soyadi</td>
                         <td>@item.Email</td>
                         <td>@item.Roller.FirstOrDefault()</td>
-                        <td><a asp-action="Update" asp-controller="Kullanici" class="btn btn-success">Update</a></td>
-                        <td><a asp-action="Delete" asp-controller="Kullanici" class="btn btn-danger">Delete</a></td>
+                        <td><a asp-action="Update" asp-controller="Kullanici" asp-route-Id="@item.Id" class="btn btn-outline-success ">Update</a></td>
+                        <td><a asp-action="Delete" asp-controller="Kullanici" asp-route-Id="@item.Id" class="btn btn-outline-danger">Delete</a></td>
                     </tr>
                 }
             </tbody>

@@ -34,28 +34,33 @@ namespace OtelMotel.MvcUI.Controllers
                 ModelState.AddModelError("", "Kullanici Adi Yada sifre Hatalidir");
                 return View(login);
             }
-            //Claim leri olusturup cookie icerisine atalim
+            //Claim leri olusturup cookie icerisine atalim.Her bir claim kimlik karti uzerinde bulunacak alan olarak dusunulebilir.
 
             var claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Email,kullanici.Email),
                 new Claim(ClaimTypes.Role,"Admin"),
-                new Claim(ClaimTypes.Name,kullanici.Adi + " " + kullanici.Soyadi)
+                new Claim(ClaimTypes.Name,kullanici.Adi + " " + kullanici.Soyadi),
+                new Claim(ClaimTypes.DateOfBirth,kullanici.DogumTarihi.ToString()),
+                new Claim("TcNo",kullanici.TcNo),
+                new Claim(ClaimTypes.Gender,kullanici.Cinsiyet.ToString())
             };
-
+            //Kimlik kartını olusturdugumuz yer. Kart uzerinde hangi alanlarin olldugu bilgisi claim listesinde mevcuttur.
             var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var authenticationProperty = new AuthenticationProperties()
             {
                 IsPersistent = login.RememberMe
             };
-
+            //Kullanici icin claimIdentity kimlik karti ile giriş yapilmistir
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimIdentity), authenticationProperty);
-
+            //Giris yapilmis ve kimlik karti olusturulmus kullanici Area icerisindeki admin bolumune gonderildi.
             return RedirectToAction("Index", "Home", new { Area = "Admin" });
         }
         public IActionResult LogOut()
         {
-            return View();
+            HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+
         }
     }
 }
