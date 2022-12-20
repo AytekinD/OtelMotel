@@ -45,12 +45,12 @@ namespace OtelMotel.DAL.Contexts
 
                     case EntityState.Modified:
                         entry.CurrentValues["Status"] = Status.Update;
-                        entry.CurrentValues["UpdateDate"] = DateTime.Now;
+                        entry.CurrentValues["Update"] = DateTime.Now;
                         break;
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;
                         entry.CurrentValues["Status"] = Status.Delete;
-                        entry.CurrentValues["UpdateDate"] = DateTime.Now;
+                        entry.CurrentValues["Update"] = DateTime.Now;
                         break;
 
                 }
