@@ -124,6 +124,15 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 
             };
 
+            if (createDTO.Roller.Count > 0)
+            {
+                //foreach (var roleId in createDTO.Roller)
+                //{
+                //    var role = await roleManager.GetByIdAsync(roleId);
+                //    kullanici.Roller.Add(role);
+                //}
+            }
+
             if (createDTO.ImageFile != null)
             {
                 var extent = Path.GetExtension(createDTO.ImageFile.FileName);

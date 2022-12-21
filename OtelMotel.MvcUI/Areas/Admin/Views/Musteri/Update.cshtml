@@ -1,4 +1,4 @@
-﻿@model MusteriCreateDTO
+﻿@model MusteriUpdateDTO
 <div class="card">
     <div class="card-header">
         <h3>Yeni Musteri</h3>
@@ -7,7 +7,7 @@
         </div>
     </div>
     <div class="card-body">
-        <form asp-action="Create" asp-controller="Musteri" method="post" enctype="multipart/form-data">
+        <form asp-action="Update" asp-controller="Musteri" method="post" enctype="multipart/form-data">
 
             <div class="input-group mb-3">
                 <input type="text" asp-for="Ad" class="form-control" placeholder="Adi">
@@ -32,8 +32,7 @@
                         <span class="fas fa-text text-info" asp-validation-for="MusteriTcNo"></span>
                     </div>
                 </div>
-            </div>
-            <div class="input-group mb-3">
+                 <div class="input-group mb-3">
                 <input type="text" asp-for="Cinsiyet" class="form-control" placeholder="Cinsiyet">
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -41,6 +40,9 @@
                     </div>
                 </div>
             </div>
+
+            </div>
+            
             <div class="input-group mb-3">
                 <input type="text" asp-for="CepNo" class="form-control" placeholder="Cep No">
                 <div class="input-group-append">

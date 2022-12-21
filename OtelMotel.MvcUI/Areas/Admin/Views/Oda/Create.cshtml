@@ -1,0 +1,39 @@
+﻿@model OdaCreateDTO
+<div class="card">
+    <div class="card-header text-center">
+        <h3>Yeni Oda</h3>
+        <div class="card-header">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="Oda" method="post" enctype="multipart/form-data">
+
+            <div class="input-group mb-3">
+                <input type="text" asp-for="OdaNo" class="form-control" placeholder="Oda Numarası">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-text text-info" asp-validation-for="OdaNo"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" asp-for="KisiSayisi" class="form-control" placeholder="Kisi Sayisi">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-text text-info" asp-validation-for="KisiSayisi"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group">
+                <tr>
+                    <td><h3>Dolu mu</h3></td>
+                    <input type="checkbox" asp-for="Durum" class="form-control" placeholder="Dolu">
+                </tr>           
+            </div>
+
+            <button type="submit" class="btn btn-primary" value="Kaydet">Kaydet</button>
+
+        </form>
+    </div>
+</div>

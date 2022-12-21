@@ -15,6 +15,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Models.Musteri
         [MaxLength(11)]
         public string MusteriTcNo { get; set; }
         public string CepNo { get; set; }
+        public bool Cinsiyet { get; set; }
 
 
     }

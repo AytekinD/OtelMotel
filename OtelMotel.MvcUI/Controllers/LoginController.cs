@@ -43,7 +43,8 @@ namespace OtelMotel.MvcUI.Controllers
                 new Claim(ClaimTypes.Name,kullanici.Adi + " " + kullanici.Soyadi),
                 new Claim(ClaimTypes.DateOfBirth,kullanici.DogumTarihi.ToString()),
                 new Claim("TcNo",kullanici.TcNo),
-                new Claim(ClaimTypes.Gender,kullanici.Cinsiyet.ToString())
+                new Claim(ClaimTypes.Gender,kullanici.Cinsiyet.ToString()),
+                new Claim(ClaimTypes.NameIdentifier,kullanici.Id.ToString()),
             };
             //Kimlik kartını olusturdugumuz yer. Kart uzerinde hangi alanlarin olldugu bilgisi claim listesinde mevcuttur.
             var claimIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
