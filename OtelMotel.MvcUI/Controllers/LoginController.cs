@@ -44,6 +44,7 @@ namespace OtelMotel.MvcUI.Controllers
                 new Claim(ClaimTypes.DateOfBirth,kullanici.DogumTarihi.ToString()),
                 new Claim("TcNo",kullanici.TcNo),
                 new Claim(ClaimTypes.Gender,kullanici.Cinsiyet.ToString()),
+                    new Claim(ClaimTypes.Uri,kullanici.ImageUrl==null?"":kullanici.ImageUrl),
                 new Claim(ClaimTypes.NameIdentifier,kullanici.Id.ToString()),
             };
             //Kimlik kartını olusturdugumuz yer. Kart uzerinde hangi alanlarin olldugu bilgisi claim listesinde mevcuttur.

@@ -28,7 +28,8 @@ namespace OtelMotel.DAL.Concrete
 
         public virtual async Task<int> DeleteAsync(T entity)
         {
-            d;
+            dbContext.Set<T>().Remove(entity);
+            return await dbContext.SaveChangesAsync();
         }
 
         public virtual async Task<T?> GetByIdAsync(string id)

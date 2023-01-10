@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OtelMotel.DAL.Contexts;
 
@@ -11,9 +12,11 @@ using OtelMotel.DAL.Contexts;
 namespace OtelMotel.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    partial class SqlDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230110120341_kullanici")]
+    partial class kullanici
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +25,21 @@ namespace OtelMotel.DAL.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("KullaniciRole", b =>
+                {
+                    b.Property<Guid>("KullanicilarId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RollerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KullanicilarId", "RollerId");
+
+                    b.HasIndex("RollerId");
+
+                    b.ToTable("KullaniciRole");
+                });
+
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Kullanici", b =>
                 {
                     b.Property<Guid>("Id")
@@ -29,10 +47,11 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Adi")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<bool?>("Cinsiyet")
+                    b.Property<bool>("Cinsiyet")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("CreateDate")
@@ -40,7 +59,7 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValue(new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
 
-                    b.Property<DateTime?>("DogumTarihi")
+                    b.Property<DateTime>("DogumTarihi")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -49,13 +68,13 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<byte[]>("ImageData")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KullaniciAdi")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -67,6 +86,7 @@ namespace OtelMotel.DAL.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Soyadi")
+                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -87,42 +107,13 @@ namespace OtelMotel.DAL.Migrations
                         .IsUnique();
 
                     b.HasIndex("KullaniciAdi")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[KullaniciAdi] IS NOT NULL");
 
                     b.HasIndex("TcNo")
                         .IsUnique();
 
                     b.ToTable("Kullanicilar");
-                });
-
-            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.KullaniciRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("KullaniciId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("Update")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("KullaniciId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("KullaniciRole");
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>
@@ -372,23 +363,19 @@ namespace OtelMotel.DAL.Migrations
                     b.ToTable("Roller");
                 });
 
-            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.KullaniciRole", b =>
+            modelBuilder.Entity("KullaniciRole", b =>
                 {
-                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", "Kullanici")
-                        .WithMany("Roller")
-                        .HasForeignKey("KullaniciId")
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Kullanici", null)
+                        .WithMany()
+                        .HasForeignKey("KullanicilarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Role", "Role")
-                        .WithMany("Kullanicilar")
-                        .HasForeignKey("RoleId")
+                    b.HasOne("OtelMotel.Entities.Entities.Concrete.Role", null)
+                        .WithMany()
+                        .HasForeignKey("RollerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Kullanici");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>
@@ -501,8 +488,6 @@ namespace OtelMotel.DAL.Migrations
                     b.Navigation("RezervasyonDetaylari");
 
                     b.Navigation("Rezervasyonlar");
-
-                    b.Navigation("Roller");
                 });
 
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Musteri", b =>
@@ -525,11 +510,6 @@ namespace OtelMotel.DAL.Migrations
             modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Rezervasyon", b =>
                 {
                     b.Navigation("RezervasyonDetaylari");
-                });
-
-            modelBuilder.Entity("OtelMotel.Entities.Entities.Concrete.Role", b =>
-                {
-                    b.Navigation("Kullanicilar");
                 });
 #pragma warning restore 612, 618
         }

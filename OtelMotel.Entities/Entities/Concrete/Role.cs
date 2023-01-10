@@ -4,7 +4,12 @@ namespace OtelMotel.Entities.Entities.Concrete
 {
     public class Role : BaseEntity
     {
-        public string RoleName { get; set; }
-        public ICollection<Kullanici>? Kullanicilar { get; set; }
+        public Role()
+        {
+            Kullanicilar = new HashSet<KullaniciRole>();
+        }
+        public string? RoleName { get; set; }
+
+        public ICollection<KullaniciRole> Kullanicilar { get; set; }
     }
 }
