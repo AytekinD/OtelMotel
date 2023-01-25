@@ -10,6 +10,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+            //güncel 
         }
     }
 }
