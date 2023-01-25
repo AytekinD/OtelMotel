@@ -12,8 +12,8 @@ using OtelMotel.DAL.Contexts;
 namespace OtelMotel.DAL.Migrations
 {
     [DbContext(typeof(SqlDbContext))]
-    [Migration("20230110121214_kullanicirole")]
-    partial class kullanicirole
+    [Migration("20230125192429_initdb")]
+    partial class initdb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

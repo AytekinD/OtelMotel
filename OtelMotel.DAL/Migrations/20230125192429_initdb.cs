@@ -20,10 +20,12 @@ namespace OtelMotel.DAL.Migrations
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TcNo = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
-                    Adi = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Soyadi = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Cinsiyet = table.Column<bool>(type: "bit", nullable: false),
-                    DogumTarihi = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Adi = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Soyadi = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Cinsiyet = table.Column<bool>(type: "bit", nullable: true),
+                    DogumTarihi = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ImageData = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)),
                     Update = table.Column<DateTime>(type: "datetime2", nullable: true),
                     KullaniciId = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -104,21 +106,25 @@ namespace OtelMotel.DAL.Migrations
                 name: "KullaniciRole",
                 columns: table => new
                 {
-                    KullanicilarId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RollerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    KullaniciId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Update = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KullaniciRole", x => new { x.KullanicilarId, x.RollerId });
+                    table.PrimaryKey("PK_KullaniciRole", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_KullaniciRole_Kullanicilar_KullanicilarId",
-                        column: x => x.KullanicilarId,
+                        name: "FK_KullaniciRole_Kullanicilar_KullaniciId",
+                        column: x => x.KullaniciId,
                         principalTable: "Kullanicilar",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_KullaniciRole_Roller_RollerId",
-                        column: x => x.RollerId,
+                        name: "FK_KullaniciRole_Roller_RoleId",
+                        column: x => x.RoleId,
                         principalTable: "Roller",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -252,9 +258,14 @@ namespace OtelMotel.DAL.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_KullaniciRole_RollerId",
+                name: "IX_KullaniciRole_KullaniciId",
                 table: "KullaniciRole",
-                column: "RollerId");
+                column: "KullaniciId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KullaniciRole_RoleId",
+                table: "KullaniciRole",
+                column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Musteriler_KullaniciId",
