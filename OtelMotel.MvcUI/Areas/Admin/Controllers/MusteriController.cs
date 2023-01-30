@@ -79,7 +79,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
             return View(updateDto);
         }
 
-       
+
         [HttpPost]
         public async Task<IActionResult> Update(MusteriUpdateDTO updateDTO)
         {
@@ -108,40 +108,27 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
             }
         }
 
-        [HttpDelete("{Id:Guid}")]
+        [HttpGet]
         public async Task<IActionResult> Delete(Guid Id)
         {
             var musteri = await musteriManager.FindAsync(p => p.Id == Id);
-            await musteriManager.DeleteAsync(musteri);
-
             return RedirectToAction("Index", "Musteri");
 
         }
-        //[HttpPost]
-        //public async Task<IActionResult> Delete(MusteriUpdateDTO updateDTO)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(updateDTO);
-        //    }
-        //    var musteri = musteriManager.FindAsync(p => p.Id == updateDTO.Id).Result;
-
-        //    musteri.Ad = updateDTO.Ad;
-        //    musteri.Soyad = updateDTO.Soyad;
-        //    musteri.MusteriTcNo = updateDTO.MusteriTcNo;
-        //    musteri.CepNo = updateDTO.CepNo;
-        //    musteri.Cinsiyet = updateDTO.Cinsiyet;
-
-
-        //    var sonuc = await musteriManager.DeleteAsync(musteri);
-        //    if (sonuc > 0)
-        //    {
-        //    }
-        //    else
-        //    {
-        //        ModelState.AddModelError("", "Bilinmeyen bir hata olustu.Tekrar deneyiniz.");
-        //        return View(updateDTO);
-        //    }
-        //}
+        [HttpPost]
+        public async Task<IActionResult> Delete(Musteri musteri)
+        {
+            musteri = await musteriManager.FindAsync(p => p.Id == musteri.Id);
+            var sonuc = await musteriManager.DeleteAsync(musteri);
+            if (sonuc > 0)
+            {
+                return RedirectToAction("Index", "Musteri");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Bilinmeyen bir hata olustu.Tekrar deneyiniz.");
+                return View(musteri);
+            }
+        }
     }
 }
