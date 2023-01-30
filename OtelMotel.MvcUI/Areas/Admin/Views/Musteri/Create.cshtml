@@ -33,19 +33,30 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group mb-3">
-                <input type="text" asp-for="Cinsiyet" class="form-control" placeholder="Cinsiyet">
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-text text-info" asp-validation-for="Cinsiyet"></span>
-                    </div>
-                </div>
+            @*<div class="input-group mb-3">
+            <input type="text" asp-for="Cinsiyet" class="form-control" placeholder="Cinsiyet">
+            <div class="input-group-append">
+            <div class="input-group-text">
+            <span class="fas fa-text text-info" asp-validation-for="Cinsiyet"></span>
             </div>
+            </div>
+            </div>*@
             <div class="input-group mb-3">
                 <input type="text" asp-for="CepNo" class="form-control" placeholder="Cep No">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-phone text-info" asp-validation-for="CepNo"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group ">
+                <div class="position-relative">
+                    <div class="form-check form-check-lg d-flex align-items-end">
+                        <label class="form-check-label text-gray-800" asp-for="Cinsiyet"> Erkek : </label>
+                        <input class="form-check-input me-2 " type="checkbox" id="Cinsiyet" asp-for="@Model.Cinsiyet">
+                        <label class="form-check-label text-gray-800" asp-for="Cinsiyet"> Kadın : </label>
+                        <input class="form-check-input me-2 " type="checkbox" id="Cinsiyet" asp-for="@Model.Cinsiyet">
                     </div>
                 </div>
             </div>
