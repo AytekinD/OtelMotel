@@ -38,6 +38,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 
 			var oda = new Oda()
 			{
+				
 				OdaNo = createDTO.OdaNo,
 				KisiSayisi = createDTO.KisiSayisi,
 				Durum = createDTO.Durum,

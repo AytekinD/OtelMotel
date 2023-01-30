@@ -87,6 +87,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 
 
             var sonuc = await kullaniciManager.UpdateAsync(kullanici);
+
             if (sonuc > 0)
             {
                 return RedirectToAction("Index", "Kullanici");

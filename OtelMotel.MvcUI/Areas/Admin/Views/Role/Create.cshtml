@@ -1,0 +1,37 @@
+﻿@model Role
+
+<div class="card">
+    <div class="card-header text-center">
+        <h3>Yeni Role</h3>
+        <div class="card-header">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form asp-action="Create" asp-controller="Role" method="post" enctype="multipart/form-data">
+
+            <div class="input-group mb-3">
+                <input type="text" asp-for="RoleName" class="form-control" placeholder="Role Name">
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-text text-info" asp-validation-for="RoleName"></span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <tr>
+                    <td><h3>Aktif mi</h3></td>
+                    <input type="checkbox" asp-for="Status"  class="form-control" placeholder="Status">
+                </tr>
+            </div>
+
+            
+
+            <button type="submit" class="btn btn-primary" value="Kaydet">Kaydet</button>
+           
+
+
+        </form>
+    </div>
+</div>

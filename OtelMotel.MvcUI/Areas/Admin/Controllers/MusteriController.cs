@@ -31,6 +31,8 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 
             return View(createDto);
         }
+
+
         [HttpPost]
         public async Task<IActionResult> Create(MusteriCreateDTO createDTO)
         {
@@ -64,7 +66,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Update(Guid Id)
         {
-            var musteri = musteriManager.FindAsync(p => p.Id == Id).Result;
+            var musteri = await musteriManager.FindAsync(p => p.Id == Id);
             MusteriUpdateDTO updateDto = new MusteriUpdateDTO
             {
                 Id = musteri.Id,
@@ -73,10 +75,11 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
                 MusteriTcNo = musteri.MusteriTcNo,
                 CepNo = musteri.CepNo,
                 Cinsiyet = musteri.Cinsiyet,
-                //KullaniciId = Guid.Parse(User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier).Value)
             };
             return View(updateDto);
         }
+
+       
         [HttpPost]
         public async Task<IActionResult> Update(MusteriUpdateDTO updateDTO)
         {
@@ -104,5 +107,41 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
                 return View(updateDTO);
             }
         }
+
+        [HttpDelete("{Id:Guid}")]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            var musteri = await musteriManager.FindAsync(p => p.Id == Id);
+            await musteriManager.DeleteAsync(musteri);
+
+            return RedirectToAction("Index", "Musteri");
+
+        }
+        //[HttpPost]
+        //public async Task<IActionResult> Delete(MusteriUpdateDTO updateDTO)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(updateDTO);
+        //    }
+        //    var musteri = musteriManager.FindAsync(p => p.Id == updateDTO.Id).Result;
+
+        //    musteri.Ad = updateDTO.Ad;
+        //    musteri.Soyad = updateDTO.Soyad;
+        //    musteri.MusteriTcNo = updateDTO.MusteriTcNo;
+        //    musteri.CepNo = updateDTO.CepNo;
+        //    musteri.Cinsiyet = updateDTO.Cinsiyet;
+
+
+        //    var sonuc = await musteriManager.DeleteAsync(musteri);
+        //    if (sonuc > 0)
+        //    {
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError("", "Bilinmeyen bir hata olustu.Tekrar deneyiniz.");
+        //        return View(updateDTO);
+        //    }
+        //}
     }
 }
