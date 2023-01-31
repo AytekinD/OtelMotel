@@ -124,7 +124,8 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
                 DogumTarihi = createDTO.DogumTarihi,
                 Email = createDTO.Email,
                 TcNo = createDTO.TcNo,
-
+                KullaniciAdi = createDTO.KullaniciAdi,
+                Password = createDTO.Password,
             };
 
             #region Eger role atanmis ise

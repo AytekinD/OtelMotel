@@ -4,6 +4,7 @@ namespace OtelMotel.Entities.Entities.Concrete
 {
     public class Kullanici : BaseEntity
     {
+
         public Kullanici()
         {
 
@@ -14,11 +15,11 @@ namespace OtelMotel.Entities.Entities.Concrete
             Rezervasyonlar = new HashSet<Rezervasyon>();
             RezervasyonDetaylari = new HashSet<RezervasyonDetay>();
         }
-        public string KullaniciAdi { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
+        public string? KullaniciAdi { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
 
-        public string TcNo { get; set; }
+        public string? TcNo { get; set; }
 
         public string? Adi { get; set; }
         public string? Soyadi { get; set; }
