@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OtelMotel.BL.Abstract;
+using OtelMotel.BL.Concrete;
+using OtelMotel.Entities.Entities.Abstract;
 using OtelMotel.Entities.Entities.Concrete;
 using OtelMotel.MvcUI.Areas.Admin.Models.Oda;
+using System.Security.Claims;
 
 namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 {
@@ -17,7 +20,7 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 		}
 		public async Task<IActionResult> Index()
 		{
-			var result = await odaManager.FindAllAsync(null);
+			var result = await odaManager.FindAllAsync(p => p.Status == Status.Active || p.Status == Status.Update);
 			return View(result);
 		}
 		[HttpGet]
@@ -42,14 +45,15 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 				OdaNo = createDTO.OdaNo,
 				KisiSayisi = createDTO.KisiSayisi,
 				Durum = createDTO.Durum,
+				KullaniciId = Guid.Parse(User.Claims.FirstOrDefault(p => p.Type == ClaimTypes.NameIdentifier).Value)
 
-			};
+            };
 
 
 			var sonuc = await odaManager.CreateAsync(oda);
 			if (sonuc > 0)
 			{
-				return RedirectToAction("Index", "Musteri");
+				return RedirectToAction("Index", "Oda");
 			}
 			else
 			{
@@ -91,5 +95,21 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 				return View(odaUpdateDTO);
 			}
 		}
-	}
+
+        [HttpGet]
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            var oda = await odaManager.FindAsync(p => p.Id == Id);
+            return View(oda);
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> Delete(Oda oda)
+		{
+            var odadelete = await odaManager.FindAsync(p => p.Id == oda.Id);
+            odaManager.DeleteAsync(odadelete);
+
+            return RedirectToAction("Index", "Oda");
+        }
+    }
 }

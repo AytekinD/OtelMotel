@@ -35,14 +35,35 @@ namespace OtelMotel.MvcUI.Areas.Admin.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Create(OdaFiyatCreateDTO createDTO)
+        {
+            if(!ModelState.IsValid)
+            {
+                @ViewBag.Roller = GetOdalar();
+                return View(createDTO);
+            }
+            var odaFiyat = new OdaFiyat() 
+            {
+                Baslangic=createDTO.Baslangic,
+                Bitis=createDTO.Bitis,
+                Fiyat=createDTO.Fiyat,
+                
+            };
 
+            var result = await odaFiyatManager.CreateAsync(odaFiyat);
+            if (result > 0)
+            {
+                return RedirectToAction("Index", "OdaFiyat");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Bilinmeyen bir hata olustu.");
+                @ViewBag.Roller = GetOdalar();
+                return View(createDTO);
+            } 
 
-
-
-
-
-
-
+        }
 
 
         [NonAction]
